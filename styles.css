@@ -119,25 +119,36 @@ header {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     height: auto;
-    min-height: 250px;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
 }
 
 header .container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .logo img {
-    height: 200px; /* Aumentado 5x (de 40px para 200px) */
+    height: auto; /* Usar altura automática baseada na largura */
+    width: 600px; /* Largura fixa extremamente maior */
     margin: 10px 0;
     max-width: 100%;
+}
+
+nav {
+    margin-top: 20px;
+    width: 100%;
 }
 
 nav ul {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 nav ul li {
@@ -155,7 +166,7 @@ nav ul li a:hover {
 
 /* Hero Section */
 .hero {
-    padding: 300px 0 100px; /* Aumentado de 160px para 300px para acomodar o header maior */
+    padding: 400px 0 100px; /* Aumentado para 400px para acomodar o header maior */
     background: var(--gradient);
     color: var(--text-white);
     position: relative;
