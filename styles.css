@@ -1,5 +1,13 @@
 /* Base Styles */
 
+/* Direct Link Button */
+.direct-link {
+    margin-top: 10px;
+    background-color: #4a00e0;
+    display: inline-block;
+    text-decoration: none;
+}
+
 /* Coming Soon Tag */
 .coming-soon-tag {
     display: inline-block;

@@ -142,15 +142,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Here you would typically send the data to a server
-            // For now, we'll just show a success message
+            // Show a success message briefly, then redirect
             betaForm.innerHTML = `
                 <div class="success-message">
                     <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
                     <h3>Obrigado, ${nameInput.value}!</h3>
-                    <p>Você está na lista de espera para o beta do LivePlan³. Entraremos em contato em breve.</p>
+                    <p>Redirecionando para o aplicativo...</p>
                 </div>
             `;
+            
+            // Redirect to app.liveplan3.com after a short delay
+            setTimeout(() => {
+                window.location.href = 'https://app.liveplan3.com/';
+            }, 1500);
         });
     }
 
