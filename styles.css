@@ -430,42 +430,40 @@ header .container {
 .video-container {
     max-width: 800px;
     margin: 40px auto 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-.video-placeholder {
-    position: relative;
+.feature-video {
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    display: block;
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+    background-color: #000;
+}
+
+/* Custom video controls styling */
+.feature-video::-webkit-media-controls {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
     overflow: hidden;
 }
 
-.play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background-color: rgba(255, 255, 255, 0.9);
+.feature-video::-webkit-media-controls-panel {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.feature-video::-webkit-media-controls-play-button {
+    background-color: var(--primary-purple);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.play-button i {
-    font-size: 30px;
-    color: var(--primary-purple);
-}
-
-.play-button:hover {
-    background-color: var(--text-white);
-    transform: translate(-50%, -50%) scale(1.1);
+/* Video hover effect */
+.video-container:hover .feature-video {
+    transform: scale(1.02);
 }
 
 @media (max-width: 768px) {
