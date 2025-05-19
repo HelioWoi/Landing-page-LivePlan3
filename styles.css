@@ -1,4 +1,18 @@
 /* Base Styles */
+
+/* Coming Soon Tag */
+.coming-soon-tag {
+    display: inline-block;
+    background-color: #ff9800;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
 :root {
     --primary-purple: #8e2de2;
     --secondary-purple: #4a00e0;
