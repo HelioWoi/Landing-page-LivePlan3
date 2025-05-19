@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M20 20H50V30H20V20Z" fill="#8e2de2"/>
-  <text x="70" y="45" font-family="Inter, sans-serif" font-size="40" font-weight="700" fill="#8e2de2">LivePlan<tspan font-size="30" dy="-15">3</tspan></text>
-  <text x="70" y="65" font-family="Inter, sans-serif" font-size="16" fill="#333333">Your Personal Finance App</text>
-</svg>

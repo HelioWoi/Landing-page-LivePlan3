@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Hamburger menu functionality
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const mobileNav = document.querySelector('.mobile-nav');
+    
+    if (hamburgerMenu && mobileNav) {
+        hamburgerMenu.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburgerMenu.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+    }
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -9,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: targetElement.offsetTop - 100, // Adjusted for header height
                     behavior: 'smooth'
                 });
             }
@@ -18,16 +37,97 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Header scroll effect
     const header = document.querySelector('header');
+    const bannerImage = document.querySelector('.banner-image');
+    
     window.addEventListener('scroll', function() {
+        // Header effect
         if (window.scrollY > 50) {
-            header.style.padding = '15px 0';
+            header.style.padding = '5px 0';
             header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            header.style.padding = '20px 0';
+            header.style.padding = '5px 0';
             header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+        }
+        
+        // Banner zoom effect
+        if (bannerImage) {
+            const scrollPosition = window.scrollY;
+            // Apply subtle zoom effect when user starts scrolling
+            if (scrollPosition > 10) {
+                bannerImage.classList.add('zoom-effect');
+            } else {
+                bannerImage.classList.remove('zoom-effect');
+            }
         }
     });
 
+    // Percentage counter animation
+    const percentageElements = document.querySelectorAll('.percentage');
+    let animationStarted = false;
+    
+    // Function to animate counting
+    function animateCounters() {
+        if (animationStarted) return;
+        
+        percentageElements.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            let count = 0;
+            const duration = 1500; // Animation duration in milliseconds
+            const frameRate = 30; // Number of frames per second
+            const increment = target / (duration / 1000 * frameRate);
+            
+            const timer = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                    clearInterval(timer);
+                    counter.textContent = `${target}%`;
+                } else {
+                    counter.textContent = `${Math.floor(count)}%`;
+                }
+            }, 1000 / frameRate);
+        });
+        
+        animationStarted = true;
+    }
+    
+    // Intersection Observer to trigger animation when elements are in view
+    const formulaSection = document.querySelector('.formula-cards');
+    if (formulaSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        observer.observe(formulaSection);
+    }
+    
+    // Dashboard and weekly budget images fade-in animation
+    const animatedImages = document.querySelectorAll('.dashboard-animation');
+    
+    animatedImages.forEach(image => {
+        // Initially set opacity to 0
+        image.style.opacity = '0';
+        image.style.transition = 'opacity 1.2s ease-in-out';
+        
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Fade in the image
+                    setTimeout(() => {
+                        image.style.opacity = '1';
+                    }, 300); // Small delay for better effect
+                    imageObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        imageObserver.observe(image);
+    });
+    
     // Form submission
     const betaForm = document.getElementById('beta-form');
     if (betaForm) {

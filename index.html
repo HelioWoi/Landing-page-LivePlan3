@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LivePlan³ - Your Personal Finance App</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,14 +15,21 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img src="public/logo LivePlan3-slogan.svg" alt="LivePlan³">
+                <img src="/logo LivePlan3-slogan.svg" alt="LivePlan³">
             </div>
-            <nav>
+            <div class="nav-container">
+                <a href="#join-beta" class="btn-secondary join-beta-btn">Join Beta <span class="free-tag">FREE</span></a>
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <nav class="mobile-nav">
                 <ul>
                     <li><a href="#how-it-works">How it Works</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#join-beta" class="btn-secondary">Join Beta</a></li>
                 </ul>
             </nav>
         </div>
@@ -29,13 +37,8 @@
 
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Organize your finances.<br>Start building your future.</h1>
-                <p>LivePlan³ helps you plan, track and achieve — all in one place.</p>
-                <a href="#join-beta" class="btn-primary">Join the Beta</a>
-            </div>
-            <div class="hero-image">
-                <img src="images/app-mockup.png" alt="LivePlan³ App">
+            <div class="hero-banner">
+                <img src="/banner test.jpg" alt="LivePlan³ Banner" class="banner-image">
             </div>
         </div>
     </section>
@@ -47,17 +50,17 @@
             
             <div class="formula-cards">
                 <div class="formula-card">
-                    <div class="percentage">50%</div>
+                    <div class="percentage" data-target="50">0%</div>
                     <h3>Fixed Expenses</h3>
                     <p>Housing, utilities, insurance, and other recurring bills</p>
                 </div>
                 <div class="formula-card">
-                    <div class="percentage">30%</div>
+                    <div class="percentage" data-target="30">0%</div>
                     <h3>Variable & Leisure</h3>
                     <p>Dining out, entertainment, shopping, and other flexible spending</p>
                 </div>
                 <div class="formula-card">
-                    <div class="percentage">20%</div>
+                    <div class="percentage" data-target="20">0%</div>
                     <h3>Investments</h3>
                     <p>Savings, emergency fund, and long-term wealth building</p>
                 </div>
@@ -65,7 +68,7 @@
             
             <div class="app-demo">
                 <div class="app-screens">
-                    <img src="images/dashboard-screen.png" alt="Dashboard Screen">
+                    <img src="/dashboard.jpg" alt="Dashboard Screen" class="dashboard-animation">
                 </div>
                 <div class="app-description">
                     <h3>Visual Dashboard</h3>
@@ -78,7 +81,10 @@
                 </div>
             </div>
             
-            <div class="app-demo reverse">
+            <div class="app-demo weekly-budget">
+                <div class="app-screens">
+                    <img src="images/weekly-budget.svg" alt="Weekly Budget Screen" class="dashboard-animation weekly-animation">
+                </div>
                 <div class="app-description">
                     <h3>Weekly Budget</h3>
                     <p>Easily register and visualize your expenses on a weekly basis. Our intuitive interface makes it simple to track your finances with precision.</p>
@@ -88,9 +94,6 @@
                         <li><i class="fas fa-check-circle"></i> See your balance at the end of each week</li>
                         <li><i class="fas fa-check-circle"></i> Switch between monthly and yearly views</li>
                     </ul>
-                </div>
-                <div class="app-screens">
-                    <img src="images/weekly-budget.svg" alt="Weekly Budget Screen">
                 </div>
             </div>
         </div>
@@ -148,6 +151,22 @@
         </div>
     </section>
 
+    <section id="app-video" class="app-video">
+        <div class="container">
+            <h2>See LivePlan³ in Action</h2>
+            <p class="section-subtitle">Watch how our app simplifies your financial journey</p>
+            
+            <div class="video-container">
+                <!-- Video placeholder - replace with actual embed code when ready -->
+                <div class="video-placeholder">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="testimonials" class="testimonials">
         <div class="container">
             <h2>What Our Early Users Say</h2>
@@ -156,12 +175,12 @@
             <div class="testimonial-cards">
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"The Formula³ approach finally helped me understand where my money was going. Now I'm actually saving for the first time."</p>
+                        <p>"LivePlan³ made it surprisingly simple to organise my finances. For the first time, I can clearly see where my money goes and what I'm working towards. Setting goals feels easy and actually achievable."</p>
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar placeholder-avatar"></div>
+                        <div class="author-avatar" style="background-image: url('/Ana.jpg');"></div>
                         <div class="author-info">
-                            <h4>Future User</h4>
+                            <h4>Ana de Nadai</h4>
                             <p>Beta Tester</p>
                         </div>
                     </div>
@@ -171,9 +190,9 @@
                         <p>"I love the weekly view. It's changed how I think about spending and helped me build my emergency fund."</p>
                     </div>
                     <div class="testimonial-author">
-                        <div class="author-avatar placeholder-avatar"></div>
+                        <div class="author-avatar" style="background-image: url('/Luana.jpg');"></div>
                         <div class="author-info">
-                            <h4>Future User</h4>
+                            <h4>Luana Cristina Labegalini</h4>
                             <p>Beta Tester</p>
                         </div>
                     </div>
@@ -185,7 +204,11 @@
     <section id="join-beta" class="join-beta">
         <div class="container">
             <h2>100 spots only. Be the first to try LivePlan³.</h2>
-            <p class="section-subtitle">Join our beta program and help shape the future of personal finance</p>
+            <p class="section-subtitle beta-subtitle">Join our beta program and help shape the future of personal finance</p>
+            <div class="beta-highlights">
+                <span class="beta-tag"><i class="fas fa-check-circle"></i> Completely FREE</span>
+                <span class="beta-tag"><i class="fas fa-check-circle"></i> No credit card required</span>
+            </div>
             
             <form id="beta-form" class="beta-form">
                 <div class="form-group">
@@ -197,7 +220,7 @@
                 <button type="submit" class="btn-primary">Join the Beta</button>
             </form>
             
-            <p class="beta-note">By joining, you'll get early access and help us improve LivePlan³ before the public launch.</p>
+            <p class="beta-note">By joining, you'll get early access and help us improve LivePlan³ before the public launch. <span class="highlight-text">Free access, no credit card needed.</span></p>
         </div>
     </section>
 
@@ -205,8 +228,9 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="public/logo LivePlan3-slogan.svg" alt="LivePlan³">
-                    <p>Your Personal Finance App</p>
+                    <a href="index.html">
+                        <img src="/logo LivePlan3 white-slogan.svg" alt="LivePlan³">
+                    </a>
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
@@ -220,15 +244,14 @@
                     <div class="footer-column">
                         <h4>Company</h4>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
                         <h4>Connect</h4>
                         <div class="social-links">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-linkedin"></i></a>
                         </div>
@@ -237,6 +260,29 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 LivePlan³. All rights reserved.</p>
+            </div>
+            
+            <div class="legal-disclaimer">
+                <h5>Legal Disclaimer & Acknowledgements</h5>
+                
+                <p>LivePlan³ acknowledges and pays respect to the Traditional Custodians of the lands on which we operate, and to Elders past, present and emerging. We recognise their ongoing connection to land, waters and community.</p>
+                
+                <p>The content and tools available on this website and app are developed and maintained by <strong>LivePlan³ (ABN 33 234 268 637)</strong>, a digital platform focused on helping individuals manage their finances with clarity and simplicity.</p>
+                
+                <p>LivePlan³ does <strong>not provide financial, investment, legal or taxation advice</strong>. All content is <strong>general in nature</strong> and is not intended to constitute personal advice or take into account your individual financial circumstances, objectives, or needs. Users should consider whether the information is appropriate for their situation and, if necessary, seek professional advice from a licensed adviser.</p>
+                
+                <p>All financial information you enter into the platform (such as income, expenses, goals, or projections) is used solely to provide visual tools for your own planning. We do not provide tailored recommendations or automated investment advice.</p>
+                
+                <p>LivePlan³ is not a financial services provider and is not licensed by ASIC. By using this website or the app, you acknowledge and agree that:</p>
+                <ul>
+                    <li>Your use of the platform is at your own discretion;</li>
+                    <li>Any decisions made based on data displayed in the app are your own responsibility;</li>
+                    <li>You are solely responsible for verifying the appropriateness of any financial planning based on your personal circumstances.</li>
+                </ul>
+                
+                <p>We are committed to safeguarding your privacy and personal data. Please review our <a href="privacy-policy.html">Privacy Policy</a> for full details on data usage, storage, and protection.</p>
+                
+                <p>For any questions, please contact us at <strong>support@liveplan3.com</strong>.</p>
             </div>
         </div>
     </footer>
