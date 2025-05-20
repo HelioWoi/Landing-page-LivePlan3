@@ -142,19 +142,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Show a success message briefly, then redirect
+            // Show loading message while saving to Supabase
             betaForm.innerHTML = `
                 <div class="success-message">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                    <h3>Thank you, ${nameInput.value}!</h3>
-                    <p>Redirecting to the app...</p>
+                    <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
+                    <h3>Processing...</h3>
+                    <p>Please wait while we save your information.</p>
                 </div>
             `;
             
-            // Redirect to app.liveplan3.com after a short delay
-            setTimeout(() => {
-                window.location.href = 'https://app.liveplan3.com/';
-            }, 1500);
+            // Save to Supabase and then redirect
+            saveBetaSignup(nameInput.value, emailInput.value)
+                .then(success => {
+                    // Show success message
+                    betaForm.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
+                            <h3>Thank you, ${nameInput.value}!</h3>
+                            <p>Redirecting to the app...</p>
+                        </div>
+                    `;
+                    
+                    // Redirect to app.liveplan3.com after a short delay
+                    setTimeout(() => {
+                        window.location.href = 'https://app.liveplan3.com/';
+                    }, 1500);
+                })
+                .catch(error => {
+                    console.error('Error in form submission:', error);
+                    // Still redirect even if there was an error saving to Supabase
+                    betaForm.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
+                            <h3>Thank you, ${nameInput.value}!</h3>
+                            <p>Redirecting to the app...</p>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        window.location.href = 'https://app.liveplan3.com/';
+                    }, 1500);
+                });
         });
     }
 
