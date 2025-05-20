@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form submission
     const betaForm = document.getElementById('beta-form');
     if (betaForm) {
-        betaForm.addEventListener('submit', function(e) {
+        betaForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const nameInput = document.getElementById('name');
@@ -152,36 +152,63 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             
             // Save to Supabase and then redirect
-            saveBetaSignup(nameInput.value, emailInput.value)
-                .then(success => {
-                    // Show success message
-                    betaForm.innerHTML = `
-                        <div class="success-message">
-                            <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                            <h3>Thank you, ${nameInput.value}!</h3>
-                            <p>Redirecting to the app...</p>
-                        </div>
-                    `;
-                    
-                    // Redirect to app.liveplan3.com after a short delay
-                    setTimeout(() => {
-                        window.location.href = 'https://app.liveplan3.com/';
-                    }, 1500);
-                })
-                .catch(error => {
-                    console.error('Error in form submission:', error);
-                    // Still redirect even if there was an error saving to Supabase
-                    betaForm.innerHTML = `
-                        <div class="success-message">
-                            <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                            <h3>Thank you, ${nameInput.value}!</h3>
-                            <p>Redirecting to the app...</p>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        window.location.href = 'https://app.liveplan3.com/';
-                    }, 1500);
-                });
+            console.log('Starting form submission process...');
+            
+            // Prevent any form of automatic redirect
+            let redirectAllowed = false;
+            
+            // Show processing message
+            betaForm.innerHTML = `
+                <div class="success-message">
+                    <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
+                    <h3>Processing...</h3>
+                    <p>Please wait while we save your information.</p>
+                </div>
+            `;
+            
+            try {
+                console.log('Calling saveBetaSignup function...');
+                const success = await saveBetaSignup(nameInput.value, emailInput.value);
+                console.log('saveBetaSignup completed with result:', success);
+                
+                // Show success message
+                betaForm.innerHTML = `
+                    <div class="success-message">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
+                        <h3>Thank you, ${nameInput.value}!</h3>
+                        <p>Redirecting to the app...</p>
+                    </div>
+                `;
+                
+                // Now allow redirect
+                redirectAllowed = true;
+                console.log('Setting redirect timer...');
+                
+                // Redirect to app.liveplan3.com after a short delay
+                setTimeout(() => {
+                    console.log('Executing redirect now...');
+                    window.location.href = 'https://app.liveplan3.com/';
+                }, 3000); // Longer delay to ensure everything completes
+            } catch (error) {
+                console.error('Error in form submission:', error);
+                
+                // Show error message but still allow redirect
+                betaForm.innerHTML = `
+                    <div class="success-message">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
+                        <h3>Thank you, ${nameInput.value}!</h3>
+                        <p>Redirecting to the app...</p>
+                    </div>
+                `;
+                
+                // Now allow redirect
+                redirectAllowed = true;
+                
+                setTimeout(() => {
+                    console.log('Executing redirect after error...');
+                    window.location.href = 'https://app.liveplan3.com/';
+                }, 3000);
+            }
         });
     }
 

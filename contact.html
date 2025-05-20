@@ -10,6 +10,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <header>
@@ -109,16 +113,23 @@
                                 <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
                             </div>
                             
-
-                            
                             <div class="form-group">
                                 <label for="message">Message</label>
                                 <textarea id="message" name="message" placeholder="How can we help you?" rows="5" required></textarea>
                             </div>
                             
+                            <!-- Hidden fields for EmailJS template -->
+                            <input type="hidden" name="to_name" value="LivePlan³ Support">
+                            
                             <div class="form-group checkbox-group">
                                 <input type="checkbox" id="privacy" name="privacy" required>
                                 <label for="privacy">I agree to the <a href="privacy-policy.html" id="privacy-policy-link">Privacy Policy</a></label>
+                            </div>
+                            
+                            <!-- Google reCAPTCHA -->
+                            <div class="form-group recaptcha-container">
+                                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                                <!-- Note: This is Google's test key. Replace with your actual reCAPTCHA site key for production -->
                             </div>
                             
                             <button type="submit" class="btn-primary">Send Message</button>
@@ -255,15 +266,6 @@
             // Add mobile menu functionality if needed
         });
         
-        // Form submission handler
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically handle the form submission
-            // For now, just show an alert
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-        
         // Privacy Policy Modal
         const modal = document.getElementById('privacy-modal');
         const privacyLink = document.getElementById('privacy-policy-link');
@@ -288,5 +290,7 @@
             }
         });
     </script>
+    <!-- Contact Form Email Handler -->
+    <script src="contact-form.js"></script>
 </body>
 </html>

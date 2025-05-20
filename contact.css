@@ -272,6 +272,25 @@
     border-color: var(--primary-purple);
 }
 
+/* reCAPTCHA Styling */
+.recaptcha-container {
+    margin-bottom: 20px;
+}
+
+.recaptcha-container .g-recaptcha {
+    transform-origin: left top;
+    -webkit-transform-origin: left top;
+}
+
+/* Make reCAPTCHA responsive on mobile */
+@media screen and (max-width: 480px) {
+    .recaptcha-container .g-recaptcha {
+        transform: scale(0.85);
+        -webkit-transform: scale(0.85);
+        margin-bottom: 10px;
+    }
+}
+
 .checkbox-group input[type="checkbox"] {
     -webkit-appearance: none;
     -moz-appearance: none;
