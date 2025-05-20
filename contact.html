@@ -13,7 +13,7 @@
     <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
     <!-- EmailJS Library -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <!-- Google reCAPTCHA -->
+    <!-- Google reCAPTCHA v2 -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
@@ -130,7 +130,8 @@
                             <!-- Google reCAPTCHA -->
                             <div class="form-group recaptcha-container">
                                 <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
-                                <!-- Note: This is Google's test key. Replace with your actual reCAPTCHA site key for production -->
+                                <!-- Using Google's test key for local development - will need to be replaced with production key when deployed -->
+                                <!-- Production key: 6Lc3YUErAAAAABdPn8gRxjvstlg2O_ZhaJ_LaPAR -->
                             </div>
                             
                             <button type="submit" class="btn-primary">Send Message</button>
