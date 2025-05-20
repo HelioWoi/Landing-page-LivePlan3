@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const emailInput = document.getElementById('email');
             
             if (nameInput.value.trim() === '' || emailInput.value.trim() === '') {
-                alert('Por favor, preencha todos os campos.');
+                alert('Please fill in all fields.');
                 return;
             }
             
@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
             betaForm.innerHTML = `
                 <div class="success-message">
                     <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                    <h3>Obrigado, ${nameInput.value}!</h3>
-                    <p>Redirecionando para o aplicativo...</p>
+                    <h3>Thank you, ${nameInput.value}!</h3>
+                    <p>Redirecting to the app...</p>
                 </div>
             `;
             
