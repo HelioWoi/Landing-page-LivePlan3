@@ -244,10 +244,13 @@ header .container {
 /* Hero Section */
 .hero {
     padding: 0;
-    background: var(--text-white);
+    background: url('public/background.jpg');
+    background-size: cover;
+    background-position: center;
     position: relative;
     overflow: hidden;
-    margin-top: 0%; /* Added space for the fixed header */
+    margin-top: 0; /* Removido espaço percentual */
+    padding-top: 40px; /* Espaço fixo para o header */
 }
 
 .hero .container {
@@ -264,11 +267,14 @@ header .container {
     align-items: center;
     overflow: hidden;
     position: relative;
+    max-height: 80vh; /* Limita a altura máxima */
 }
 
 .banner-image {
-    width: 100%;
+    width: auto;
     height: auto;
+    max-width: 100%;
+    max-height: 80vh; /* Limita a altura máxima */
     display: block;
     max-width: 100%;
     margin-bottom: -5px; /* Remove any extra space at the bottom */
@@ -861,7 +867,7 @@ footer {
     }
     
     .hero {
-        padding: 120px 0 80px;
+        padding: 60px 0 40px; /* Reduzido o padding para dispositivos móveis */
     }
     
     .formula-card {
@@ -907,7 +913,7 @@ header {
 
 /* Garantir que a seção hero não fique escondida atrás do header */
 .hero {
-    padding-top: 60px;
+    padding-top: 40px; /* Reduzido para ficar mais próximo do menu */
 }
 /* Responsive logo sizes */
 @media (max-width: 768px) {
