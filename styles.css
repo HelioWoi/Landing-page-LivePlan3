@@ -268,6 +268,7 @@ header .container {
     overflow: hidden;
     position: relative;
     max-height: 80vh; /* Limita a altura máxima */
+    text-align: center;
 }
 
 .banner-image {
@@ -276,9 +277,12 @@ header .container {
     max-width: 100%;
     max-height: 80vh; /* Limita a altura máxima */
     display: block;
-    max-width: 100%;
+    margin: 0 auto;
     margin-bottom: -5px; /* Remove any extra space at the bottom */
     transition: transform 1.5s ease-out;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
     transform-origin: center center;
     will-change: transform;
 }
@@ -868,6 +872,18 @@ footer {
     
     .hero {
         padding: 60px 0 40px; /* Reduzido o padding para dispositivos móveis */
+    }
+    
+    .hero-banner {
+        max-height: none;
+    }
+    
+    .banner-image {
+        max-height: none;
+        width: 100%;
+        object-fit: contain;
+        object-position: center;
+        padding: 0 10px;
     }
     
     .formula-card {
