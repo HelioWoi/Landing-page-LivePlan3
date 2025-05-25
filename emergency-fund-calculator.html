@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Fund Calculator - LivePlan³</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="public/favicon.svg" type="image/svg+xml">
+    <style>
+        .calculator-page {
+            padding-top: 80px;
+            min-height: 100vh;
+            background-color: var(--light-gray);
+        }
+        
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: var(--text-white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .calculator-form {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 2px rgba(142, 45, 226, 0.2);
+        }
+        
+        .calculator-results {
+            background-color: var(--light-gray);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .result-header {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+        
+        .progress-bar-container {
+            height: 20px;
+            background-color: var(--medium-gray);
+            border-radius: 10px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            width: 11%;
+            transition: width 1s ease-in-out;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .monthly-contribution {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .monthly-contribution:last-child {
+            border-bottom: none;
+        }
+        
+        .contribution-month {
+            font-weight: 600;
+        }
+        
+        .calculator-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--primary-purple);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link i {
+            margin-right: 5px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .alert-message {
+            display: flex;
+            align-items: flex-start;
+            background-color: #FFF9E6;
+            border-left: 4px solid #FFB800;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .alert-message i {
+            color: #FFB800;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            margin-top: 2px;
+        }
+        
+        .alert-content p {
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .alert-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: 25px 20px;
+                margin: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="public/logo LivePlan3-slogan.svg" alt="LivePlan³">
+                </a>
+            </div>
+            <div class="nav-container">
+                <a href="index.html#join-beta" class="btn-secondary join-beta-btn">Join Beta <span class="free-tag">FREE</span></a>
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="index.html#how-it-works">How it Works</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#testimonials">Testimonials</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="calculator-page">
+        <div class="calculator-container">
+            <div class="calculator-header">
+                <h1>Emergency Fund Calculator</h1>
+                <p>Start by building an emergency reserve that covers 6 months of your earnings.</p>
+            </div>
+            
+            <div class="intro-message">
+                <div class="alert-message intro-alert">
+                    <i class="fas fa-lightbulb"></i>
+                    <div class="alert-content">
+                        <p>Run a simulation and see how much you need to save to reach a healthy emergency reserve.</p>
+                        <p>An ideal emergency fund should cover 3 to 6 months of your monthly expenses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="monthly-income">Monthly Income ($)</label>
+                    <input type="number" id="monthly-income" value="5000" min="0" step="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="months-coverage">Months of Coverage</label>
+                    <input type="number" id="months-coverage" value="6" min="1" max="24">
+                </div>
+                
+                <button class="btn-primary" id="calculate-btn">Calculate</button>
+            </div>
+            
+            <div class="calculator-results" style="display: none;">
+                <div class="result-header">Simulation Results</div>
+                
+                <div>
+                    <p><strong>Your target:</strong> <span id="target-amount">$30,000.00</span> (6 × Monthly Income)</p>
+                    <p><strong>Recommendation:</strong> Save this amount to have a healthy emergency fund.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <h3>Tips for building your emergency fund:</h3>
+                    <ul>
+                        <li>Start small, even if it's just 5% of your monthly income</li>
+                        <li>Automate your savings to maintain consistency</li>
+                        <li>Keep your emergency fund in a separate, easily accessible account</li>
+                        <li>Review your progress regularly and adjust as needed</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="calculator-actions">
+                <a href="index.html#emergency-fund" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                <a href="index.html#join-beta" class="btn-primary" id="join-beta-btn">Join Beta <span class="free-tag purple">FREE</span></a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <img src="public/logo LivePlan3 white-slogan.svg" alt="LivePlan³">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>LivePlan³</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="index.html#features">Features</a></li>
+                            <li><a href="index.html#join-beta">Join Beta</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms of Service</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LivePlan³. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu functionality
+        document.querySelector('.hamburger-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.mobile-nav').classList.toggle('active');
+        });
+        
+        // Adicionar estilo para a caixa de dicas
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .intro-alert {
+                    background-color: #E8F4FD;
+                    border-left: 4px solid #2196F3;
+                    margin-bottom: 30px;
+                }
+                
+                .intro-alert i {
+                    color: #2196F3;
+                }
+                
+                .tip-box {
+                    background-color: #F5F5F5;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-top: 25px;
+                }
+                
+                .tip-box h3 {
+                    font-size: 1.1rem;
+                    margin-bottom: 15px;
+                    color: var(--dark-gray);
+                }
+                
+                .tip-box ul {
+                    list-style-type: disc;
+                    padding-left: 20px;
+                }
+                
+                .tip-box li {
+                    margin-bottom: 10px;
+                    font-size: 0.95rem;
+                }
+                
+                .free-tag.purple {
+                    background-color: #fff;
+                    color: var(--primary-purple);
+                    font-weight: 700;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                    margin-left: 5px;
+                    display: inline-block;
+                }
+                
+                #join-beta-btn {
+                    text-decoration: none;
+                    display: inline-block;
+                    text-align: center;
+                }
+            </style>
+        `);
+        
+        // Emergency Fund Calculator functionality
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            // Get input values
+            const monthlyIncome = parseFloat(document.getElementById('monthly-income').value) || 0;
+            const monthsCoverage = parseInt(document.getElementById('months-coverage').value) || 6;
+            
+            // Calculate target amount
+            const targetAmount = monthlyIncome * monthsCoverage;
+            
+            // Update target amount display
+            document.getElementById('target-amount').textContent = 
+                `$${targetAmount.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            // Show results
+            document.querySelector('.calculator-results').style.display = 'block';
+        });
+        
+        // No longer needed as we're using a direct link to the join-beta section
+    </script>
+</body>
+</html>

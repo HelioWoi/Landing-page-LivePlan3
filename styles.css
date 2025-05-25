@@ -381,6 +381,42 @@ header .container {
     will-change: transform;
 }
 
+/* Emergency Fund Calculator */
+#emergency-fund {
+    background-color: var(--text-white);
+    padding: 40px 0;
+    border-radius: 20px;
+    margin: 0 20px 80px;
+}
+
+.emergency-fund-img {
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--medium-gray);
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.calculator-link {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    display: inline-block;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    #emergency-fund {
+        margin: 0 10px 60px;
+        padding: 30px 10px;
+    }
+    
+    .emergency-fund-img {
+        max-width: 90%;
+    }
+}
+
 @keyframes float {
     0% {
         transform: translateY(0px);
