@@ -259,6 +259,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoContainer = videoElement ? videoElement.closest('.video-container') : null;
     const playButton = document.getElementById('video-play-button');
     
+    // Função para atualizar a visibilidade do botão de play
+    const updatePlayButtonVisibility = (isPlaying) => {
+        if (videoContainer && playButton) {
+            if (isPlaying) {
+                videoContainer.classList.add('playing');
+            } else {
+                videoContainer.classList.remove('playing');
+            }
+        }
+    };
+    
     if (videoElement && videoContainer && playButton) {
         // Flag to ensure the video only plays once
         let hasPlayed = false;
@@ -279,16 +290,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Add controls back after playback starts
                     videoElement.controls = true;
                     
-                    // Add playing class to container
-                    videoContainer.classList.add('playing');
+                    // Update play button visibility
+                    updatePlayButtonVisibility(true);
                     
                     // Listen for video end
                     videoElement.addEventListener('ended', () => {
                         console.log('Video playback ended');
                         // Reset to first frame
                         videoElement.currentTime = 0;
-                        // Remove playing class
-                        videoContainer.classList.remove('playing');
+                        // Update play button visibility
+                        updatePlayButtonVisibility(false);
                     });
                 })
                 .catch(error => {
@@ -325,8 +336,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (!entry.isIntersecting && !videoElement.paused) {
                     // Pausar o vídeo se ele sair da visualização enquanto estiver sendo reproduzido
                     videoElement.pause();
-                    // Remove playing class
-                    videoContainer.classList.remove('playing');
+                    // Update play button visibility
+                    updatePlayButtonVisibility(false);
                 }
             });
         }, { threshold: threshold });
@@ -341,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error on play button click:', err);
                 }).then(() => {
                     if (videoElement) { // Verificar se o elemento ainda existe
-                        videoContainer.classList.add('playing');
+                        updatePlayButtonVisibility(true);
                     }
                 });
             }
@@ -352,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Ignorar cliques no botão de play
             if (e.target !== playButton && !videoElement.paused) {
                 videoElement.pause();
-                videoContainer.classList.remove('playing');
+                updatePlayButtonVisibility(false);
             }
         });
         
@@ -360,7 +371,15 @@ document.addEventListener('DOMContentLoaded', function() {
         videoElement.addEventListener('click', () => {
             if (!videoElement.paused) {
                 videoElement.pause();
-                videoContainer.classList.remove('playing');
+                updatePlayButtonVisibility(false);
+            } else {
+                videoElement.play().catch(err => {
+                    console.error('Error on video click play:', err);
+                }).then(() => {
+                    if (videoElement) {
+                        updatePlayButtonVisibility(true);
+                    }
+                });
             }
         });
         
@@ -371,7 +390,15 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!videoElement.paused) {
                 videoElement.pause();
-                videoContainer.classList.remove('playing');
+                updatePlayButtonVisibility(false);
+            } else {
+                videoElement.play().catch(err => {
+                    console.error('Error on video touch play:', err);
+                }).then(() => {
+                    if (videoElement) {
+                        updatePlayButtonVisibility(true);
+                    }
+                });
             }
         });
         
@@ -385,10 +412,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error on touch play:', err);
                 }).then(() => {
                     if (videoElement) { // Verificar se o elemento ainda existe
-                        videoContainer.classList.add('playing');
+                        updatePlayButtonVisibility(true);
                     }
                 });
             }
+        });
+        
+        // Adicionar evento para atualizar a visibilidade do botão quando o vídeo começa ou pausa
+        videoElement.addEventListener('play', () => {
+            updatePlayButtonVisibility(true);
+        });
+        
+        videoElement.addEventListener('pause', () => {
+            updatePlayButtonVisibility(false);
         });
     }
 });
