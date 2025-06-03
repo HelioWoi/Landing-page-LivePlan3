@@ -260,49 +260,89 @@ document.addEventListener('DOMContentLoaded', function() {
         // Flag to ensure the video only plays once
         let hasPlayed = false;
         
-        // Create an Intersection Observer
+        // Função para tentar reproduzir o vídeo com várias tentativas
+        const attemptAutoplay = (maxAttempts = 3, currentAttempt = 0) => {
+            if (currentAttempt >= maxAttempts || hasPlayed) return;
+            
+            // Garantir que o vídeo esteja mudo para autoplay
+            videoElement.muted = true;
+            
+            // Tentar reproduzir o vídeo
+            videoElement.play()
+                .then(() => {
+                    console.log('Video playback started successfully');
+                    hasPlayed = true;
+                    
+                    // Add controls back after playback starts
+                    videoElement.controls = true;
+                    
+                    // Listen for video end
+                    videoElement.addEventListener('ended', () => {
+                        console.log('Video playback ended');
+                        // Reset to first frame
+                        videoElement.currentTime = 0;
+                    });
+                })
+                .catch(error => {
+                    console.error(`Attempt ${currentAttempt + 1}/${maxAttempts} failed:`, error);
+                    
+                    // Tentar novamente após um pequeno atraso
+                    setTimeout(() => {
+                        attemptAutoplay(maxAttempts, currentAttempt + 1);
+                    }, 1000);
+                    
+                    // Se todas as tentativas falharem, mostrar controles
+                    if (currentAttempt === maxAttempts - 1) {
+                        console.log('All autoplay attempts failed, showing controls');
+                        videoElement.controls = true;
+                    }
+                });
+        };
+        
+        // Detectar se é um dispositivo móvel
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // Criar um Intersection Observer com threshold menor para dispositivos móveis
+        const threshold = isMobile ? 0.3 : 0.6; // Threshold menor para móveis
+        
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // If video is in view and hasn't played yet
+                // Se o vídeo estiver visível e ainda não foi reproduzido
                 if (entry.isIntersecting && !hasPlayed) {
-                    // Add a small delay to ensure smooth experience
+                    // Adicionar um pequeno atraso para garantir uma experiência suave
                     setTimeout(() => {
-                        // Play the video
-                        videoElement.play()
-                            .then(() => {
-                                console.log('Video playback started');
-                                hasPlayed = true;
-                                
-                                // Add controls back after playback starts
-                                videoElement.controls = true;
-                                
-                                // Listen for video end
-                                videoElement.addEventListener('ended', () => {
-                                    console.log('Video playback ended');
-                                    // Reset to first frame
-                                    videoElement.currentTime = 0;
-                                });
-                            })
-                            .catch(error => {
-                                console.error('Error playing video:', error);
-                                // Add controls in case autoplay fails
-                                videoElement.controls = true;
-                            });
-                    }, 500);
+                        // Iniciar tentativas de reprodução automática
+                        attemptAutoplay();
+                    }, isMobile ? 100 : 500); // Atraso menor para dispositivos móveis
                 } else if (!entry.isIntersecting && !videoElement.paused) {
-                    // Pause the video if it scrolls out of view while playing
+                    // Pausar o vídeo se ele sair da visualização enquanto estiver sendo reproduzido
                     videoElement.pause();
                 }
             });
-        }, { threshold: 0.6 }); // Trigger when 60% of the video is visible
+        }, { threshold: threshold });
         
-        // Start observing the video element
+        // Iniciar observação do elemento de vídeo
         videoObserver.observe(videoElement);
         
-        // Add click event to play/pause the video
+        // Adicionar evento de clique para reproduzir/pausar o vídeo
         videoElement.addEventListener('click', () => {
             if (videoElement.paused) {
-                videoElement.play();
+                videoElement.play().catch(err => {
+                    console.error('Error on click play:', err);
+                    videoElement.controls = true;
+                });
+            } else {
+                videoElement.pause();
+            }
+        });
+        
+        // Adicionar evento de toque para dispositivos móveis
+        videoElement.addEventListener('touchend', () => {
+            if (videoElement.paused) {
+                videoElement.play().catch(err => {
+                    console.error('Error on touch play:', err);
+                    videoElement.controls = true;
+                });
             } else {
                 videoElement.pause();
             }
