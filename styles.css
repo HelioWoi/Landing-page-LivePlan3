@@ -534,6 +534,68 @@ header .container {
     transition: all 0.3s ease;
 }
 
+/* Custom play button styling */
+.video-container {
+    position: relative;
+}
+
+/* Hide default video controls */
+.feature-video::-webkit-media-controls {
+    display: none !important;
+}
+
+.feature-video::-webkit-media-controls-panel,
+.feature-video::-webkit-media-controls-play-button,
+.feature-video::-webkit-media-controls-volume-slider,
+.feature-video::-webkit-media-controls-timeline,
+.feature-video::-webkit-media-controls-current-time-display,
+.feature-video::-webkit-media-controls-time-remaining-display,
+.feature-video::-webkit-media-controls-fullscreen-button,
+.feature-video::-webkit-media-controls-mute-button {
+    display: none !important;
+}
+
+/* Custom play button */
+.video-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-purple);
+    border-radius: 50%;
+    opacity: 0.9;
+    z-index: 2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.video-play-button::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 26px;
+    border-color: transparent transparent transparent white;
+    margin-left: 5px;
+}
+
+.video-container.playing .video-play-button {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.video-container:hover .video-play-button {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
 /* Video hover effect */
 .video-container:hover .feature-video {
     transform: scale(1.02);
