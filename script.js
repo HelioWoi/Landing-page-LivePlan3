@@ -259,17 +259,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoContainer = videoElement ? videoElement.closest('.video-container') : null;
     const playButton = document.getElementById('video-play-button');
     
-    // Função para atualizar a visibilidade do botão de play
-    const updatePlayButtonVisibility = (isPlaying) => {
-        if (videoContainer && playButton) {
-            if (isPlaying) {
-                videoContainer.classList.add('playing');
-            } else {
-                videoContainer.classList.remove('playing');
-            }
-        }
-    };
-    
     if (videoElement && videoContainer && playButton) {
         // Flag to ensure the video only plays once
         let hasPlayed = false;
@@ -346,41 +335,47 @@ document.addEventListener('DOMContentLoaded', function() {
         videoObserver.observe(videoElement);
         
         // Adicionar evento de clique ao botão de play
-        playButton.addEventListener('click', () => {
+        playButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (videoElement.paused) {
-                videoElement.play().catch(err => {
-                    console.error('Error on play button click:', err);
-                }).then(() => {
-                    if (videoElement) { // Verificar se o elemento ainda existe
-                        updatePlayButtonVisibility(true);
-                    }
-                });
+                videoElement.play();
+                videoContainer.classList.add('playing');
             }
         });
         
-        // Adicionar evento de clique ao container do vídeo para pausar quando em reprodução
-        videoContainer.addEventListener('click', (e) => {
+        // Adicionar evento de clique diretamente ao elemento de vídeo
+        videoElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Video clicked, paused state:', this.paused);
+            if (!this.paused) {
+                this.pause();
+                videoContainer.classList.remove('playing');
+            }
+        }, true);
+        
+        // Adicionar evento de clique ao container para pausar o vídeo
+        videoContainer.addEventListener('click', function(e) {
             // Ignorar cliques no botão de play
             if (e.target !== playButton && !videoElement.paused) {
+                console.log('Container clicked, pausing video');
                 videoElement.pause();
-                updatePlayButtonVisibility(false);
+                videoContainer.classList.remove('playing');
             }
         });
         
-        // Adicionar evento de clique ao vídeo para pausar quando em reprodução
-        videoElement.addEventListener('click', () => {
-            if (!videoElement.paused) {
-                videoElement.pause();
-                updatePlayButtonVisibility(false);
-            } else {
-                videoElement.play().catch(err => {
-                    console.error('Error on video click play:', err);
-                }).then(() => {
-                    if (videoElement) {
-                        updatePlayButtonVisibility(true);
-                    }
-                });
-            }
+        // Eventos para detectar quando o vídeo começa ou termina de reproduzir
+        videoElement.addEventListener('play', function() {
+            videoContainer.classList.add('playing');
+        });
+        
+        videoElement.addEventListener('pause', function() {
+            videoContainer.classList.remove('playing');
+        });
+        
+        videoElement.addEventListener('ended', function() {
+            videoContainer.classList.remove('playing');
         });
         
         // Adicionar evento de toque para dispositivos móveis
