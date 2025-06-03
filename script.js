@@ -253,4 +253,59 @@ document.addEventListener('DOMContentLoaded', function() {
     // Run animation on load and scroll
     window.addEventListener('load', animateOnScroll);
     window.addEventListener('scroll', animateOnScroll);
+    
+    // Auto-play video when it comes into view
+    const videoElement = document.getElementById('liveplan-video');
+    if (videoElement) {
+        // Flag to ensure the video only plays once
+        let hasPlayed = false;
+        
+        // Create an Intersection Observer
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // If video is in view and hasn't played yet
+                if (entry.isIntersecting && !hasPlayed) {
+                    // Add a small delay to ensure smooth experience
+                    setTimeout(() => {
+                        // Play the video
+                        videoElement.play()
+                            .then(() => {
+                                console.log('Video playback started');
+                                hasPlayed = true;
+                                
+                                // Add controls back after playback starts
+                                videoElement.controls = true;
+                                
+                                // Listen for video end
+                                videoElement.addEventListener('ended', () => {
+                                    console.log('Video playback ended');
+                                    // Reset to first frame
+                                    videoElement.currentTime = 0;
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error playing video:', error);
+                                // Add controls in case autoplay fails
+                                videoElement.controls = true;
+                            });
+                    }, 500);
+                } else if (!entry.isIntersecting && !videoElement.paused) {
+                    // Pause the video if it scrolls out of view while playing
+                    videoElement.pause();
+                }
+            });
+        }, { threshold: 0.6 }); // Trigger when 60% of the video is visible
+        
+        // Start observing the video element
+        videoObserver.observe(videoElement);
+        
+        // Add click event to play/pause the video
+        videoElement.addEventListener('click', () => {
+            if (videoElement.paused) {
+                videoElement.play();
+            } else {
+                videoElement.pause();
+            }
+        });
+    }
 });

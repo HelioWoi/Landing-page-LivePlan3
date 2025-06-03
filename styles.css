@@ -539,6 +539,39 @@ header .container {
     transform: scale(1.02);
 }
 
+/* Video CTA section */
+.video-cta {
+    text-align: center;
+    margin: 50px auto 0; /* Aumentado de 30px para 50px para dar mais espaço */
+    max-width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+.video-cta .btn-primary {
+    padding: 15px 32px; /* Botão ligeiramente maior */
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+}
+
+.video-cta .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.video-cta .free-tag {
+    color: var(--primary-purple);
+    font-weight: 700;
+    display: inline-block;
+}
+
+.purple {
+    color: var(--primary-purple) !important;
+    font-weight: 700;
+}
+
 @media (max-width: 768px) {
     .play-button {
         width: 60px;
