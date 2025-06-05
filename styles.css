@@ -181,6 +181,12 @@ header .container {
     color: #ffffff;
     box-shadow: 0 0 10px #9d4edd, 0 0 20px rgba(157, 78, 221, 0.4);
     border: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    font-size: 0.9rem;
 }
 
 .hamburger-menu {
@@ -1016,7 +1022,17 @@ footer {
 
 @media (max-width: 768px) {
     header {
-        padding: 15px 0;
+        padding: 10px 0;
+    }
+    
+    .join-beta-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .free-tag {
+        font-size: 0.65rem;
+        padding: 2px 5px;
     }
     
     nav ul {
@@ -1101,9 +1117,10 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px 15px;
+    padding: 20px 5px;
     max-height: none;
     overflow: visible;
+    text-align: center;
   }
   @keyframes zoomUpEffect {
     0% {
@@ -1126,10 +1143,20 @@ header {
     object-fit: contain;
     object-position: center;
     animation: zoomUpEffect 1.5s ease-out forwards;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
 }
   .hero .container {
-    padding: 0 15px;
+    padding: 0 10px;
     flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .banner-image {
+    transform: scale(0.98);
+    max-width: 95%;
+    padding: 0 5px;
   }
 }
 
