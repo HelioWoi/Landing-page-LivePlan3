@@ -1105,17 +1105,28 @@ header {
     max-height: none;
     overflow: visible;
   }
-  .banner-image {
-    width: 100%;
+  @keyframes zoomUpEffect {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.banner-image {
+    width: auto;
     height: auto;
     max-width: 100%;
-    max-height: none;
+    max-height: 600px;
+    margin: 0 auto;
+    display: block;
     object-fit: contain;
     object-position: center;
-    transform: none;
-    padding: 0;
-    margin: 0 auto;
-  }
+    animation: zoomUpEffect 1.5s ease-out forwards;
+}
   .hero .container {
     padding: 0 15px;
     flex-direction: column;
