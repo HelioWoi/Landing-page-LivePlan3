@@ -263,6 +263,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Flag to ensure the video only plays once
         let hasPlayed = false;
         
+        // Função para atualizar a visibilidade do botão de play
+        const updatePlayButtonVisibility = (isPlaying) => {
+            if (isPlaying) {
+                playButton.style.opacity = '0';
+                playButton.style.pointerEvents = 'none';
+                videoContainer.classList.add('playing');
+            } else {
+                playButton.style.opacity = '1';
+                playButton.style.pointerEvents = 'auto';
+                videoContainer.classList.remove('playing');
+            }
+        };
+        
         // Função para tentar reproduzir o vídeo com várias tentativas
         const attemptAutoplay = (maxAttempts = 3, currentAttempt = 0) => {
             if (currentAttempt >= maxAttempts || hasPlayed) return;
