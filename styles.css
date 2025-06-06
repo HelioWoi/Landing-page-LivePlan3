@@ -163,7 +163,7 @@ header .container {
 
 .logo img {
     height: auto;
-    width: 350px;
+    width: 380px;
     max-width: 100%;
     object-fit: contain;
     filter: drop-shadow(0 0 8px #9d4edd) drop-shadow(0 0 12px rgba(157, 78, 221, 0.8));
