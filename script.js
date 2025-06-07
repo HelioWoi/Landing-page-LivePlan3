@@ -151,79 +151,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
             
-            // Save to Supabase and then redirect
-            console.log('Starting form submission process...');
-            
-            // Prevent any form of automatic redirect
-            let redirectAllowed = false;
-            
-            // Show processing message
-            betaForm.innerHTML = `
-                <div class="success-message">
-                    <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                    <h3>Processing...</h3>
-                    <p>Please wait while we save your information.</p>
-                </div>
-            `;
-            
             try {
                 console.log('Calling saveBetaSignup function...');
-                const success = await saveBetaSignup(nameInput.value, emailInput.value);
-                console.log('saveBetaSignup completed with result:', success);
+                // Attempt to save to Supabase but don't wait for completion
+                saveBetaSignup(nameInput.value, emailInput.value)
+                    .then(success => {
+                        console.log('saveBetaSignup completed with result:', success);
+                    })
+                    .catch(error => {
+                        console.error('Error saving to Supabase:', error);
+                    });
                 
-                // Show success message
+                // Show success message briefly
                 betaForm.innerHTML = `
                     <div class="success-message">
                         <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
                         <h3>Thank you, ${nameInput.value}!</h3>
-                        <p>Redirecting to the app...</p>
+                        <p>Redirecting to signup...</p>
                     </div>
                 `;
                 
-                // Now allow redirect
-                redirectAllowed = true;
-                console.log('Form submission complete');
+                // Redirect to signup page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'https://app.liveplan3.com/signup';
+                }, 1000);
                 
-                // Show success message with button to proceed to app
-                betaForm.innerHTML = `
-                    <div class="success-message">
-                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
-                        <h3>Thank you, ${nameInput.value}!</h3>
-                        <p>Your information has been saved successfully.</p>
-                        <a href="https://app.liveplan3.com/" class="btn-primary" style="margin-top: 20px;">Continue to LivePlan³ App</a>
-                    </div>
-                `;
             } catch (error) {
                 console.error('Error in form submission:', error);
                 
-                // Show error message with option to try again or continue
+                // Even if there's an error, redirect to signup
                 betaForm.innerHTML = `
                     <div class="success-message">
                         <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #fff; margin-bottom: 20px;"></i>
                         <h3>Thank you, ${nameInput.value}!</h3>
-                        <p>We had trouble saving your information, but you can still proceed.</p>
-                        <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: center;">
-                            <button id="retry-button" class="btn-secondary">Try Again</button>
-                            <a href="https://app.liveplan3.com/" class="btn-primary">Continue to LivePlan³ App</a>
-                        </div>
+                        <p>Redirecting to signup...</p>
                     </div>
                 `;
                 
-                // Add event listener for retry button
-                document.getElementById('retry-button').addEventListener('click', function() {
-                    // Reset the form to try again
-                    betaForm.innerHTML = `
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" placeholder="Enter your name" required value="${nameInput.value}">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="Enter your email" required value="${emailInput.value}">
-                        </div>
-                        <button type="submit" class="btn-primary">Join Beta</button>
-                    `;
-                });
+                // Redirect to signup page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'https://app.liveplan3.com/signup';
+                }, 1000);
             }
         });
     }
